@@ -13,10 +13,12 @@ printf("%d %s", class, sex[$1]);
 for (i = 2; i <= NF - 1; ++i)
 printf(" %d:%s", i + 2, $i);
 printf("\n");
-}' data/data.csv > output/dataset.txt
+}' data/abalone.data.txt > data/dataset.txt
 # Split in training and test set.
-awk 'NR <= 3133 { print; }' data/data.csv > output/train.txt
-awk 'NR > 3133 { print; }' data/data.csv > output/test.txt
+awk 'NR <= 3133 { print; }' data/dataset.txt > output/train.txt
+awk 'NR > 3133 { print; }' data/dataset.txt > output/test.txt
 # Scale training and test set.
-libsvm-3.25/svm-scale -s output/scale.txt output/train.txt > output/train.scaled.txt
-libsvm-3.25/svm-scale -r output/scale.txt output/test.txt > output/test.scaled.txt
+libsvm-3.0/svm-scale -s output/scale.txt \
+output/train.txt > output/train.scaled.txt
+libsvm-3.0/svm-scale -r output/scale.txt \
+output/test.txt > output/test.scaled.txt
